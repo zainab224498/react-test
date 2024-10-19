@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { ChakraProvider, Button, Box, Image } from '@chakra-ui/react';
 import { RecoilRoot, useRecoilState } from 'recoil';
 import { modalState } from './state/modalState';
@@ -6,6 +6,7 @@ import ModalSteps from './components/ModalSteps';
 
 const App = () => {
   const [state, setState] = useRecoilState(modalState);
+  const [viewportHeight, setViewportHeight] = useState(window.innerHeight);
 
   const openModal = () => {
     // Reset state when opening the modal
@@ -16,13 +17,24 @@ const App = () => {
     });
   };
 
+  useEffect(() => {
+    const handleResize = () => {
+      setViewportHeight(window.innerHeight);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   return (
     <ChakraProvider>
       <Box
         display="flex"
         alignItems="center"
         justifyContent="center"
-        height="100vh"
+        height={`${viewportHeight}px`} // Set height dynamically
         flexDirection="column"
         backgroundColor="#434E61"
       >
