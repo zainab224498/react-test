@@ -61,7 +61,7 @@ const StepThree: React.FC = () => {
         Tell us what you’re interested in
       </Text>
       <Flex
-        wrap="wrap" // Allow items to wrap to the next line
+        wrap={{ base: "wrap", md: "nowrap" }}
         justifyContent="center"
         mb="4"
       >
